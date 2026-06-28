@@ -1,1 +1,193 @@
+[index.pen (1).html](https://github.com/user-attachments/files/29439568/index.pen.1.html)
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi CPCL Banper</title>
+    <style>
+        /* --- TAMPILAN LATAR BELAKANG ALAM (NATURAL) --- */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Gradasi warna langit pagi hangat berpadu dengan hijaunya hamparan sawah */
+            background: linear-gradient(180deg, #e0f2f1 0%, #a5d6a7 60%, #66bb6a 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Efek partikel daun jatuh agar suasana terasa lebih hidup/natural */
+        .leaf-particle {
+            position: absolute;
+            background: rgba(139, 195, 74, 0.6);
+            border-radius: 0 10px;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- KARTU VERIFIKASI GLASSMORPHISM ORGANIK --- */
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            /* Efek kaca buram transparan yang menyatu dengan latar belakang alam */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(27, 94, 32, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 90%;
+            max-width: 350px;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* --- ELEMEN KONTEN --- */
+        .logo-container {
+            background: white;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        img { 
+            width: 70px; 
+            height: 70px;
+            object-fit: contain; 
+        }
+
+        h2 { 
+            color: #1b5e20; /* Hijau botani gelap yang teduh */
+            margin-bottom: 30px; 
+            font-size: 20px; 
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+        
+        /* --- TOMBOL UTAMA HIJAU DAUN --- */
+        .btn {
+            display: block;
+            padding: 16px;
+            /* Gradasi warna hijau daun segar ke hijau subur */
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #66bb6a, #388e3c);
+            box-shadow: 0 12px 24px rgba(46, 125, 50, 0.4);
+            transform: scale(1.02);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Gaya tombol saat ditekan (proses loading) */
+        .btn.loading {
+            background: #78909c !important; /* Warna abu-abu batu alam yang netral */
+            box-shadow: none !important;
+            transform: none !important;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kontainer Kartu Utama -->
+    <div class="card">
+        <div class="logo-container">
+            <!-- Logo Kementerian Pertanian RI -->
+            <img src="https://wikimedia.org" alt="Logo Pertanian">
+        </div>
+        <h2>VERIFIKASI CPCL BANPER</h2>
+        
+        <!-- MASUKKAN LINK GOOGLE FORM ANDA DI href BAWAH INI (Ganti tanda #) -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfyuoFY6k5SeGUfdI63p-gQQS21yE7OxiOWqocMakiWqJc0bw/viewform?usp=header" id="tombol-masuk" class="btn">Masuk ke Google Form</a>
+    </div>
+
+    <script>
+        // 1. LOGIKA INTERAKSI TOMBOL (PROSES LOADING)
+        const tombol = document.getElementById('tombol-masuk');
+        
+        tombol.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            
+            // Ubah tombol ke mode memproses
+            this.classList.add('loading');
+            this.innerText = "Proses menuju Google Form...";
+            
+            // Memberikan jeda alami 1.2 detik sebelum beralih halaman
+            setTimeout(() => {
+                if (url && url !== '#') {
+                    window.open(url, '_blank');
+                } else {
+                    alert('Silakan ganti tanda href="#" di kode baris ke-109 dengan link Google Form Anda terlebih dahulu.');
+                }
+                
+                // Kembalikan tombol ke setelan awal
+                this.classList.remove('loading');
+                this.innerText = "Masuk ke Google Form";
+            }, 1200);
+        });
+
+        // 2. LOGIKA MEMBUAT EFEK DAUN JATUH SECARA ACAK & ALAMI
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf-particle');
+            
+            // Mengatur ukuran acak daun mini
+            const size = Math.random() * 8 + 6;
+            leaf.style.width = `${size}px`;
+            leaf.style.height = `${size * 1.5}px`;
+            
+            // Mengatur posisi horizontal acak saat muncul di atas layar
+            leaf.style.left = `${Math.random() * 100}vw`;
+            
+            // Mengatur kecepatan jatuh acak agar terlihat natural
+            leaf.style.animationDuration = `${Math.random() * 4 + 5}s`;
+            
+            document.body.appendChild(leaf);
+            
+            // Hapus elemen daun setelah sampai di bawah agar hemat memori browser
+            setTimeout(() => {
+                leaf.remove();
+            }, 9000);
+        }
+
+        // Munculkan daun baru setiap 400 milidetik
+        setInterval(createLeaf, 400);
+    </script>
+</body>
+</html>
 
